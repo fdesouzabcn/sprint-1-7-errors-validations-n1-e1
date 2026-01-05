@@ -1,31 +1,29 @@
 <?php
-// index.php
-require_once 'calculator.php'; // Include the class file
+require_once 'calculator.php';
 
-
-// Testing Calculator (Demo)
 $calculator = new Calculator();
+
 $tests = [
-    [10, 5, '+'],
-    [10, 2, 'multiply'],
-    [5, 'X', 'add'],    // Non-numeric error
-    [10, 0, '/'],       // Division by zero error
-    [10, 5, 'power']    // Invalid operation error
+    [10, 2],    
+    [15, 3],    
+    [10, 0],    // Division by zero - must throw exception
+    [7, 0],     // Division by zero - must throw exception
 ];
 
 foreach ($tests as $test) {
-    list($n1, $n2, $op) = $test;
-    echo "Attempting: {$n1} {$op} {$n2} ==> ";
+    list($num1, $num2) = $test;
+
+    echo "Attempting: {$num1} / {$num2} => ";
 
     try {
-        // Use the public method on the Calculator object
-        $result = $calculator->calculate($n1, $n2, $op);
-        echo "Result: {$result} <br>";
-
-    } catch (\Exception $e) {
-        // Catch the standard PHP Exception thrown by the class
-        echo "ERROR: " . $e->getMessage() . "<br>";
+        // Try to perform the division
+        $result = $calculator->divide($num1, $num2);
+        echo "Result: {$result}" . PHP_EOL;
+        
+    } catch (Exception $e) {
+        // Catch and handle division by zero error
+        echo "ERROR: " . $e->getMessage() . PHP_EOL;;
     }
-    echo "<hr>";
 }
+
 ?>
